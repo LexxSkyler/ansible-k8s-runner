@@ -27,7 +27,7 @@ LABEL io.openshift.expose-services=""
 
 RUN curl -o /usr/bin/kubectl https://dl.k8s.io/release/v1.20.12/bin/linux/amd64/kubectl && chmod 0755 /usr/bin/kubectl
 
-RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN cd /usr/bin/ && curl https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz | tar -xz  linux-amd64/helm --strip-components 1 && chmod 0755 /usr/bin/helm
 
 #RUN curl -o https://github.com/openshift/okd/releases/download/4.8.0-0.okd-2021-11-14-052418/openshift-client-linux-4.8.0-0.okd-2021-11-14-052418.tar.gz | tar -xz  -C /usr/bin/ && chmod 0755 /usr/bin/oc /usr/bin/kubectl
 
@@ -79,8 +79,6 @@ ENV HOME=/home/runner
 ADD utils/entrypoint.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
 
-ENTRYPOINT ["entrypoint"]
-
-CMD ["ansible-playbook", "/runner/project/main.yml", "-i", "/runner/inventory", -e "$ANSIBLE_ENV"]     
+ENTRYPOINT ["entrypoint.sh"]
 
 WORKDIR /runner/project

@@ -22,3 +22,14 @@ root:x:0:runner
 runner:x:`id -g`:
 EOF
 
+fi
+
+test -n ${ENV} && ANSIBLE_ENV="-e \"${ENV}\"" || true
+
+test -n ${TAGS} && ANSIBLE_TAGS="--tags \"${TAGS}\"" || true
+
+test -n ${SKIP_TAGS} && ANSIBLE_SKIP_TAGS="--skip-tags \"${SKIP_TAGS}\"" || true
+
+
+
+ansible-playbook /runner/project/main.yml -i /runner/inventory ${ANSIBLE_ENV} ${ANSIBLE_TAGS} ${ANSIBLE_SKIP_TAGS}
