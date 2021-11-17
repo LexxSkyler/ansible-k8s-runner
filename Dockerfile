@@ -74,8 +74,6 @@ VOLUME /runner/artifacts
 
 WORKDIR /runner
 
-ENV HOME=/home/runner
-
 ADD utils/entrypoint.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
 
